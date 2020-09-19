@@ -1,3 +1,4 @@
 --- 코드 
+1. VirtualEnv 생성
 (base) C:\vision_project>conda create --name GoogleVision python=3.6
 
