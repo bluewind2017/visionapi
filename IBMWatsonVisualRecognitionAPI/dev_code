@@ -5,3 +5,47 @@
 2. Pycharm Project Create
 - Project Name: IBMWatsonVisualRecognitionAPI
 - Existing interpreter : Conda Environment - IBMWatsonVisualRecognition Selector 
+
+3. watson-visual-recognition 관련 사이트
+https://www.ibm.com/kr-ko/cloud
+https://cloud.ibm.com/login
+
+서비스 소개
+https://www.ibm.com/kr-ko/cloud/watson-visual-recognition
+
+
+4. 로그인
+https://cloud.ibm.com/catalog#services
+https://cloud.ibm.com/catalog/services/visual-recognition
+https://www.ibm.com/kr-ko/cloud/watson-visual-recognition
+
+5. Visual Recognition 서비스 인증 정보 생성
+
+6. SDK 설치
+6-1)  sdk install
+(base) C:\vision_project>conda info --env
+# conda environments:
+#
+base        *  C:\vision_project\anaconda3
+IBMWatsonVisualRecognition     C:\vision_project\anaconda3\envs\IBMWatsonVisualRecognition
+
+--활성화
+(base) C:\vision_project>activate IBMWatsonVisualRecognition
+--패키지 설치
+(IBMWatsonVisualRecognition) C:\vision_project>pip install --upgrade watson-developer-cloud
+
+6-2)확인
+ - Pycharm - setting - Project:프로젝트명 - Python Interpreter
+
+7. 코드 작성
+
+import json
+from watson_developer_cloud import VisualRecognitionV3
+
+visual_recognition = VisualRecognitionV3(
+    '2018-03-19',
+    iam_apikey='{apikey}')
+url = 'https://watson-developer-cloud.github.io/doc-tutorial-downloads/visual-recognition/640px-IBM_VGA_90X8941_on_PS55.jpg'
+classes_result = visual_recognition.classify(url=url).get_result()
+print(json.dumps(classes_result, indent=2))
+
