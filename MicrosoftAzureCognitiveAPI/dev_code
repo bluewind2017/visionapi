@@ -1,3 +1,6 @@
 ---코드
 1. VirtualEnv 생성
 (base) C:\vision_project>conda create --name MicrosoftAzureCognitive python=3.6
+2. Pycharm Project Create
+Projct Name: AmazonRekognitionAPI
+Existing interpreter : Conda Environment - AmazonRekognition Selector
