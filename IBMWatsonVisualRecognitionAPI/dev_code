@@ -1,3 +1,7 @@
 --코드
-1. VirtualEnv 생성
+1. VirtualEnv Create
 (base) C:\vision_project>conda create --name IBMWatsonVisualRecognition python=3.6
+
+2. Pycharm Project Create
+- Project Name: IBMWatsonVisualRecognitionAPI
+- Existing interpreter : Conda Environment - IBMWatsonVisualRecognition Selector 
