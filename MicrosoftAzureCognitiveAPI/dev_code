@@ -1,1 +1,2 @@
 ---코드
+(base) C:\vision_project>conda create --name MicrosoftAzureCognitive python=3.6
