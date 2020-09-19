@@ -31,13 +31,18 @@ IBMWatsonVisualRecognition     C:\vision_project\anaconda3\envs\IBMWatsonVisualR
 
 --활성화
 (base) C:\vision_project>activate IBMWatsonVisualRecognition
---패키지 설치
+--패키지 설치 2.x 버전
 (IBMWatsonVisualRecognition) C:\vision_project>pip install --upgrade watson-developer-cloud
+
+--패키지 설치 3.x 버전
+(IBMWatsonVisualRecognition) C:\vision_project>pip install --upgrade ibm-watson
+
 
 6-2)확인
  - Pycharm - setting - Project:프로젝트명 - Python Interpreter
 
 7. 코드 작성
+---2.x 버전 코드
 
 import json
 from watson_developer_cloud import VisualRecognitionV3
@@ -49,3 +54,131 @@ url = 'https://watson-developer-cloud.github.io/doc-tutorial-downloads/visual-re
 classes_result = visual_recognition.classify(url=url).get_result()
 print(json.dumps(classes_result, indent=2))
 
+----3.x 버전 코드
+
+import json
+from os.path import abspath
+from ibm_watson import VisualRecognitionV3, ApiException
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
+authenticator = IAMAuthenticator('your_apikey')
+test_url = 'https://www.ibm.com/ibm/ginni/images' \
+           '/ginni_bio_780x981_v4_03162016.jpg'
+
+# If service instance provides IAM API key authentication
+service = VisualRecognitionV3(
+    '2018-03-19',
+    authenticator=authenticator)
+service.set_service_url('https://gateway.watsonplatform.net/visual-recognition/api')
+
+# with open(abspath('resources/cars.zip'), 'rb') as cars, \
+#      open(abspath('resources/trucks.zip'), 'rb') as trucks:
+#     classifier = service.create_classifier('Cars vs Trucks',
+#                                            positive_examples={'cars': cars},
+#                                            negative_examples=trucks).get_result()
+# print(json.dumps(classifier, indent=2))
+
+car_path = abspath("resources/cars.zip")
+try:
+    with open(car_path, 'rb') as images_file:
+        car_results = service.classify(
+            images_file=images_file,
+            threshold='0.1',
+            classifier_ids=['default']).get_result()
+        print(json.dumps(car_results, indent=2))
+except ApiException as ex:
+    print(ex)
+
+# classifier = service.get_classifier('YOUR CLASSIFIER ID').get_result()
+# print(json.dumps(classifier, indent=2))
+
+# with open(abspath('resources/car.jpg'), 'rb') as image_file:
+#     classifier = service.update_classifier('CarsvsTrucks_1479118188',
+#                                            positive_examples={'cars_positive_examples': image_file}).get_result()
+#     print(json.dumps(classifier, indent=2))
+
+# response = service.delete_classifier(classifier_id='YOUR CLASSIFIER ID').get_result()
+# print(json.dumps(response, indent=2))
+
+classifiers = service.list_classifiers().get_result()
+print(json.dumps(classifiers, indent=2))
+
+#Core ml model example
+# model_name = '{0}.mlmodel'.format(classifier_id)
+# core_ml_model = service.get_core_ml_model(classifier_id).get_result()
+# with open('/tmp/{0}'.format(model_name), 'wb') as fp:
+#     fp.write(core_ml_model.content)
+
+
+
+---4.x버전 코드
+import json
+import os
+from ibm_watson import VisualRecognitionV4
+from ibm_watson.visual_recognition_v4 import FileWithMetadata, TrainingDataObject, Location, AnalyzeEnums
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
+authenticator = IAMAuthenticator(
+    'YOUR APIKEY')
+service = VisualRecognitionV4(
+    '2018-03-19',
+    authenticator=authenticator)
+service.set_service_url('https://gateway.watsonplatform.net/visual-recognition/api')
+
+# create a classifier
+my_collection = service.create_collection(
+    name='',
+    description='testing for python'
+).get_result()
+collection_id = my_collection.get('collection_id')
+
+# add images
+with open(os.path.join(os.path.dirname(__file__), '../resources/South_Africa_Luca_Galuzzi_2004.jpeg'), 'rb') as giraffe_info:
+    add_images_result = service.add_images(
+        collection_id,
+        images_file=[FileWithMetadata(giraffe_info)],
+    ).get_result()
+print(json.dumps(add_images_result, indent=2))
+image_id = add_images_result.get('images')[0].get('image_id')
+
+# add image training data
+training_data = service.add_image_training_data(
+    collection_id,
+    image_id,
+    objects=[
+        TrainingDataObject(object='giraffe training data',
+                           location=Location(64, 270, 755, 784))
+    ]).get_result()
+print(json.dumps(training_data, indent=2))
+
+# update object metadata
+updated_object_metadata = service.update_object_metadata(
+    collection_id=collection_id,
+    object='giraffe training data',
+    new_object='updated giraffe training data').get_result()
+print(json.dumps(updated_object_metadata, indent=2))
+
+# train collection
+train_result = service.train(collection_id).get_result()
+print(json.dumps(train_result, indent=2))
+
+# training usage
+training_usage = service.get_training_usage()
+print(json.dumps(training_usage, indent=2))
+
+# analyze
+dog_path = os.path.join(os.path.dirname(__file__), '../resources/dog.jpg')
+giraffe_path = os.path.join(os.path.dirname(__file__), '../resources/my-giraffe.jpeg')
+with open(dog_path, 'rb') as dog_file, open(giraffe_path, 'rb') as giraffe_files:
+    analyze_images = service.analyze(
+        collection_ids=[collection_id],
+        features=[AnalyzeEnums.Features.OBJECTS.value],
+        images_file=[
+            FileWithMetadata(dog_file),
+            FileWithMetadata(giraffe_files)
+        ],
+        image_url=['https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/American_Eskimo_Dog.jpg/1280px-American_Eskimo_Dog.jpg']).get_result()
+    print(json.dumps(analyze_images, indent=2))
+
+# delete collection
+service.delete_collection(collection_id)
