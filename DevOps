@@ -1,1 +1,67 @@
 ---환경구성
+Pycharm + anaconda + VirtualEnv
+- 프로젝트 폴더 생성: c:\vision_project
+- Pycharm, anaconda 설치시 경로를 c:\vision_project로 설정.
+
+1. PyCharm(파이참)
+- https://www.jetbrains.com/ko-kr/pycharm/
+- 파이썬 개발에 가장 널리 사용되는 통합 개발 환경(IDE, Integrated Development Environment)
+- Professional 버전과 Community 버전이 있는데 Community 버전은 무료
+- 프로젝트별로 Python 버전 및 환경을 선택
+- Cross Platform
+
+2.Anaconda(아나콘다)
+- https://www.anaconda.com/products/individual
+- Anaconda는 실제로 conda, Python 및 150 개가 넘는 과학 패키지와 그 종속성과 함께 제공되는 배포 소프트웨어.
+- 응용 프로그램 conda는 패키지 및 환경 관리자
+
+3. VirtualEnv 생성
+3-1)Anaconda로 가상환경 만들기
+- 윈도우 시작버튼 옆 검색 창: anaconda prompt 실행
+- conda create --name 가상환경이름 설치할패키지
+  ex)(base) C:\WINDOWS\system32>cd \
+     (base) C:\>cd vision_project
+     (base) C:\vision_project>conda create --name GoogleVision python=3.6
+
+3-1-1)생성 확인 - conda info --envs
+(base) C:\vision_project>conda info --envs
+      # conda environments:
+      #
+      base      *  C:\vision_project\anaconda3
+      GoogleVision C:\vision_project\anaconda3\envs\GoogleVision
+
+3-1-2)기타 명령어
+- activate 가상환경이름 : 가상환경 활성화
+- deactivate 가상환경이름 : 가상환경 비활성화
+
+3-1-3) Pycharm + Anaconda 연동
+- Pycharm 실행후 프로젝트 생성, 프로젝트 생성시 프로젝트 폴더 변경
+   (C:\vision_project\PycharmProjects\GoogleVisionAPI)
+- 프로젝트 생성시 Existing interpreter 설정 클릭
+- Conda Environment 선택후 Existing environment 선택후 Interpreter 변경해서 프로젝트를 생성
+  Interpreter 변경시 conda 가상환경이 설치된 곳의 python.exe 파일 선택
+
+ 또는
+ - 오른쪽 아래 Configure, Setting 클릭
+ - Python Interpreter 클릭
+ - Interpreter(소스코드를 바로 실행하는 컴퓨터 프로그램 또는 환경)
+ - Show All  , 오른쪽 (+) 기호
+ - Conda Environment 클릭 후 Existing environment을 체크
+  - 모든 프로젝트에 적용 클릭(변경 가능)
+
+3-2) PyCharm에서 생성
+ - 프로젝트 생성
+ - 메뉴 File > Settings를 클릭
+ - 좌측에서 Project:프로젝트명으로 된 메뉴를 선택
+ - 메뉴를 확장하면 보이는 Python Interpreter를 선택
+ - Project Interpreter 경로 옆에 보이는 설정 버튼을 클릭
+   메뉴에서 Create VirtualEnv를 실행
+
+  가상 환경을 생성하기 전에 설정하는 창이 표시
+  Location : 가상 환경이 생성될 경로
+  Base interpreter : 사용할 파이썬 버전
+  Inherit global site-packages : 기본 인터프리터의 site-packages를 상속받아 사용할 경우 체크
+  Make available to all projects : 모든 프로젝트에서 사용할 경우 체크
+
+ - Location에서 경로를 설정하면 해당 디렉토리명으로 이름이 자동 변경
+ - 설정을 완료하면 OK를 누르면 새로운 가상 환경이 생성
