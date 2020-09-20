@@ -4,3 +4,54 @@
 2. Pycharm Project Create
 Projct Name: GoogleVisionAPI
 Existing interpreter : Conda Environment - GoogleVision Selector
+
+
+3. 프로젝트 생성
+ - vision2020
+
+4. IAM 및 관리자
+ - 서비스 계정 생성: visionuser
+ - IAM : 추가 (visionuser), 역할-소유자
+   
+5. vision api 검색
+ - Cloud Vision API  : 사용
+ 
+6. API 및 서비스
+ - 사용자 인증 정보 확인
+ - 키 추가 (JSON 방식)
+ - 키 JSON 다운로드
+
+7. Anaconda Prompt
+(base) C:\WINDOWS\system32>cd \
+(base) C:\>cd vision_project
+(base) C:\vision_project>conda info -e
+(base) C:\vision_project>activate GoogleVision
+(GoogleVision) C:\vision_project> pip install —upgrade google-cloud-vision
+(GoogleVision) C:\vision_project> pip install --upgrade google-api-python-client
+(GoogleVision) C:\vision_project> pip install --user gcloud oauth2client==1.4.12
+
+
+8. 환경변수 추가
+ - 변수 이름: "GOOGLE_APPLICATION_CREDENTIALS"
+ - 변수 값:  저장한 API 키 파일의 위치와 파일 명
+
+9. Pycharm Project 열기
+ - File-Settings-Project:Project Name - Python Interpreter 확인
+-- 샘플코드
+import io
+import os
+from google.cloud import vision
+from google.cloud.vision import types
+
+# Instantiates a client
+client = vision.ImageAnnotatorClient()
+
+file_name = os.path.join(os.path.dirname(__file__), 'resources/wakeupcat.jpg')
+with io.open(file_name, 'rb') as image_file:
+    content = image_file.read()
+image = types.Image(content=content)
+response = client.label_detection(image=image)
+labels = response.label_annotations
+print('Labels:')
+for label in labels:
+    print(label.description)
