@@ -4,3 +4,50 @@
 2. Pycharm Project Create
 Projct Name: AmazonRekognitionAPI
 Existing interpreter : Conda Environment - AmazonRekognition Selector
+
+3. Anaconda Prompt
+(base) C:\WINDOWS\system32>cd \
+(base) C:\>cd vision_project
+(base) C:\vision_project>conda info -e
+(base) C:\vision_project>activate AmazonRekognition
+(GoogleVision) C:\vision_project> pip install boto3
+
+
+4. 그룹 및 사용자 생성
+- 그룹: VisionDemo2020
+  권한 : AmazonRekognitionFullAccess, AmazonS3ReadOnlyAccess
+
+- 사용자: vision2020
+  VisionDemo2020 그룹
+- new_user_credentials.csv 다운로드
+
+5.인증코드 환경변수 설정
+- windows 
+5-1) C:\Users\USER_NAME\.aws\credentials
+[default]
+aws_access_key_id = YOUR_KEY
+aws_secret_access_key = YOUR_SECRET
+   
+5-2)C:\Users\USER_NAME\.aws\config
+[default]
+region=ap-northeast-2
+
+6. S3 설정
+- buckets 명은 visiondemo2020-bucket
+- s3 visiondemo-bucket에 액세스 권한 추가.
+- s3 buckets에 그림파일 업로드
+
+7. Pycharm Project 열기
+ - File-Settings-Project:Project Name - Python Interpreter 확인
+
+
+import boto3
+# Let's use Amazon S3
+s3 = boto3.resource('s3')
+
+# Print out bucket names
+for bucket in s3.buckets.all():
+    print(bucket.name)
+# Upload a new file
+data = open('puppies.jpg', 'rb')
+s3.Bucket('visiondemo2020').put_object(Key='puppies.jpg', Body=data)
