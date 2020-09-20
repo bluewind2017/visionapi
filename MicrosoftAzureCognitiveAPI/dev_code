@@ -4,3 +4,82 @@
 2. Pycharm Project Create
 Projct Name: AmazonRekognitionAPI
 Existing interpreter : Conda Environment - AmazonRekognition Selector
+
+
+https://azure.microsoft.com/ko-kr/
+https://github.com/Azure-Samples/cognitive-services-quickstart-code/tree/master/python/ComputerVision
+https://github.com/Microsoft/Cognitive-Vision-Python
+
+
+3. Anaconda Prompt
+(base) C:\WINDOWS\system32>cd \
+(base) C:\>cd vision_project
+(base) C:\vision_project>conda info -e
+(base) C:\vision_project>activate MicrosoftAzureCognitive
+(GoogleVision) C:\vision_project> pip install —upgrade azure-cognitiveservices-vision-computervision
+
+    pip install azure-cognitiveservices-vision-computervision==0.5.0
+
+4. Computer Vision 만들기
+
+5. 키 및 엔드포인트
+- 키 복사 및 엔드포인트 복사
+
+6. 환경변수 설정
+COMPUTER_VISION_SUBSCRIPTION_KEY:키값
+COMPUTER_VISION_ENDPOINT : 엔드포인트 값
+
+
+6.Pycharm Project 열기
+ - File-Settings-Project:Project Name - Python Interpreter 확인
+
+ matplotlib 추가
+ pillow  추가
+
+----샘플코ㅡ--
+
+import requests
+import os
+import sys
+# If you are using a Jupyter notebook, uncomment the following line.
+# %matplotlib inline
+import matplotlib.pyplot as plt
+import json
+from PIL import Image
+from io import BytesIO
+
+# Add your Computer Vision subscription key and endpoint to your environment variables.
+if 'COMPUTER_VISION_SUBSCRIPTION_KEY' in os.environ:
+    subscription_key = os.environ['COMPUTER_VISION_SUBSCRIPTION_KEY']
+else:
+    print("\nSet the COMPUTER_VISION_SUBSCRIPTION_KEY environment variable.\n**Restart your shell or IDE for changes to take effect.**")
+    sys.exit()
+
+if 'COMPUTER_VISION_ENDPOINT' in os.environ:
+    endpoint = os.environ['COMPUTER_VISION_ENDPOINT']
+
+analyze_url = endpoint + "vision/v3.0/analyze"
+
+# Set image_url to the URL of an image that you want to analyze.
+image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/" + \
+    "Broadway_and_Times_Square_by_night.jpg/450px-Broadway_and_Times_Square_by_night.jpg"
+
+headers = {'Ocp-Apim-Subscription-Key': subscription_key}
+params = {'visualFeatures': 'Categories,Description,Color'}
+data = {'url': image_url}
+response = requests.post(analyze_url, headers=headers,
+                         params=params, json=data)
+response.raise_for_status()
+
+# The 'analysis' object contains various fields that describe the image. The most
+# relevant caption for the image is obtained from the 'description' property.
+analysis = response.json()
+print(json.dumps(response.json()))
+image_caption = analysis["description"]["captions"][0]["text"].capitalize()
+
+# Display the image and overlay it with the caption.
+image = Image.open(BytesIO(requests.get(image_url).content))
+plt.imshow(image)
+plt.axis("off")
+_ = plt.title(image_caption, size="x-large", y=-0.1)
+plt.show()
