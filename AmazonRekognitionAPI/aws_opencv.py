@@ -70,3 +70,8 @@ while(True):
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
+
+
+
+-- a :저장
+-- q: 종료
