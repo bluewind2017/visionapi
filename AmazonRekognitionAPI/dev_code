@@ -15,7 +15,7 @@ Existing interpreter : Conda Environment - AmazonRekognition Selector
 
 4. 그룹 및 사용자 생성
 - 그룹: VisionDemo2020
-  권한 : AmazonRekognitionFullAccess, AmazonS3ReadOnlyAccess
+  권한 : AmazonRekognitionFullAccess, AmazonS3ReadOnlyAccess ,AmazonS3FullAccess
 
 - 사용자: vision2020
   VisionDemo2020 그룹
