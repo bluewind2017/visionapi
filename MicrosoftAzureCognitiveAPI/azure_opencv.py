@@ -19,8 +19,7 @@ else:
 
 #subscription_key =  # your subscription key here
 
-vision_base_url = "https://westeurope.api.cognitive.microsoft.com/vision/v1.0/"
-vision_analyze_url = vision_base_url + "analyze"
+vision_analyze_url = endpoint + "vision/v3.0/analyze"
 
 
 def get_image_caption(image):
