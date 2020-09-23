@@ -1,4 +1,6 @@
-""" Code source: https://docs.microsoft.com/en-au/azure/cognitive-services/face/quickstarts/python-sdk"""
+""" pip install --upgrade azure-cognitiveservices-vision-face
+Code source: https://docs.microsoft.com/en-au/azure/cognitive-services/face/quickstarts/python-sdk
+"""
 import asyncio
 import io
 import glob
