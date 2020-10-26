@@ -11,7 +11,9 @@ image_path = f'./resources/face_no_surprise.jpg'
 with io.open(image_path, 'rb') as image_file:
     content = image_file.read()
 
-image = vision.types.Image(content=content)
+#image = vision.types.Image(content=content)  #pip install google-cloud-vision == 1.0.0
+
+image = vision.Image(content=content)
 response = client.face_detection(image=image)
 faceAnnotations = response.face_annotations
 
