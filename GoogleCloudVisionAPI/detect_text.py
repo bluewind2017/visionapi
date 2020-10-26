@@ -13,7 +13,9 @@ FILE_PATH = os.path.join(FOLDER_PATH, IMAGE_FILE)
 with io.open(FILE_PATH, 'rb') as image_file:
     content = image_file.read()
 
-image = vision.types.Image(content=content)
+
+#image = vision.types.Image(content=content) #pip install google-cloud-vision == 1.0.0
+image = vision.Image(content=content)
 response = client.document_text_detection(image=image)
 
 docText = response.full_text_annotation.text
