@@ -15,7 +15,7 @@ from PIL import Image
 
 # Imports the Google Cloud client library
 from google.cloud import vision
-from google.cloud.vision import types
+#from google.cloud.vision import types  #pip install google-cloud-vision == 1.0.0
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./gcpvision2020-de4e1d07a050.json"
 # Instantiates a client
