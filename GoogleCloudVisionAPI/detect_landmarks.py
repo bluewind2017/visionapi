@@ -11,7 +11,8 @@ def detect_landmark(file_path):
         with io.open(file_path, 'rb') as image_file:
             content = image_file.read()
 
-        image = vision.types.Image(content=content)
+        #image = vision.types.Image(content=content) #pip install google-cloud-vision == 1.0.0
+        image = vision.Image(content=content)
         response = client.landmark_detection(image=image)
         landmarks = response.landmark_annotations
 
