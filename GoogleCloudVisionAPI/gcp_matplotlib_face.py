@@ -1,4 +1,7 @@
-
+(GoogleVision) C:\vision_project>pip install matplotlib
+    
+또는 Pycharm에서 추가 - matplotlib     
+    
 import os
 import io
 from google.cloud import vision
