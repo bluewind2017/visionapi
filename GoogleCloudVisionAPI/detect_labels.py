@@ -16,7 +16,8 @@ with io.open(image_path, 'rb') as image_file:
     content = image_file.read()
 
 # construct an iamge instance
-image = vision.types.Image(content=content)
+#image = vision.types.Image(content=content)  #pip install google-cloud-vision == 1.0.0
+image = vision.Image(content=content)  
 response = client.label_detection(image=image)
 labels = response.label_annotations
 
