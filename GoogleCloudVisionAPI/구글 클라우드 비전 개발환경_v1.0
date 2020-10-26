@@ -26,7 +26,7 @@ Existing interpreter : Conda Environment - GoogleVision Selector
 (base) C:\>cd vision_project
 (base) C:\vision_project>conda info -e
 (base) C:\vision_project>activate GoogleVision
-(GoogleVision) C:\vision_project> pip install —upgrade google-cloud-vision
+(GoogleVision) C:\vision_project> pip install —upgrade google-cloud-vision == 1.0.0
 (GoogleVision) C:\vision_project> pip install --upgrade google-api-python-client
 (GoogleVision) C:\vision_project> pip install --user gcloud oauth2client==1.4.12
 
