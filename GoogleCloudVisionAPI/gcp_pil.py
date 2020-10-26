@@ -4,7 +4,7 @@ import io
 
 # [START vision_face_detection_tutorial_imports]
 from google.cloud import vision
-from google.cloud.vision import types
+#from google.cloud.vision import types   #pip install google-cloud-vision == 1.0.0
 from PIL import Image, ImageDraw  #pillow - PIL fork 패키지 설치
 
 # [END vision_face_detection_tutorial_imports]
@@ -16,7 +16,8 @@ def detect_face(face_file, max_results=4):
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./gcpvision2020-de4e1d07a050.json"
     client = vision.ImageAnnotatorClient()
     content = face_file.read()
-    image = types.Image(content = content)
+    #image = types.Image(content = content) #pip install google-cloud-vision == 1.0.0
+    image = vision.Image(content = content) 
     return client.face_detection(image = image).face_annotations
 # [END vision_face_detection_tutorial_send_request]
 
