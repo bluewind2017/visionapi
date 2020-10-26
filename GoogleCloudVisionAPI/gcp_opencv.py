@@ -26,7 +26,8 @@ def detect_text(path):
     with io.open(path, 'rb') as image_file:
         content = image_file.read()
 
-    image = types.Image(content=content)
+    #image = types.Image(content=content) #pip install google-cloud-vision == 1.0.0
+    image = vision.Image(content=content)
     response = client.text_detection(image=image)
     texts = response.text_annotations
     string = ''
